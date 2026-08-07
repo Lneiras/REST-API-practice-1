@@ -1,0 +1,30 @@
+name: Continuous Integration
+
+# Se ejecuta cuando hay un Pull Request hacia main o develop
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descarga el código del repositorio
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      # 2. Configura el entorno (ejemplo para Node.js)
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Instala las dependencias del proyecto
+      - name: Instalación de dependencias
+        run: npm ci
+
+      # 4. Ejecuta las pruebas del proyecto
+      - name: Ejecutar pruebas
+        run: npm test
