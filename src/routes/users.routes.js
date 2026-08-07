@@ -17,9 +17,10 @@ router.get("/users", async(req, res) => {
     res.json(rows);
 } ); 
 
-router.get("/users/:id", (req, res) => {
+router.get("/users/:id", async(req, res) => {
     const { id } = req.params;
-    res.send( `User details for ID: ${id}` );
+    const {rows} = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+    res.json(rows[0]);
 } ); 
 
 router.post("/users", (req, res) => {
